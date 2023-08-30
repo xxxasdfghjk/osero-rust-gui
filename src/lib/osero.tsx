@@ -9,6 +9,18 @@ export class PlayerStatus {
     public static Black = 2 as const;
 }
 
+export class GameStatus {
+    public static White = 0 as const;
+    public static Black = 1 as const;
+    public static Draw = 3 as const;
+    public static Proceed = -1 as const;
+}
+export type GameState =
+    | typeof GameStatus.Black
+    | typeof GameStatus.White
+    | typeof GameStatus.Draw
+    | typeof GameStatus.Proceed;
+
 export type Empty = typeof CellStatus.Empty;
 export type White = typeof CellStatus.White;
 export type Black = typeof CellStatus.Black;
