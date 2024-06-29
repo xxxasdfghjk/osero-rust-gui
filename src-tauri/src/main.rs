@@ -17,20 +17,24 @@ fn place_stone(turn: i32, board: Vec<i32>, position: i32) -> Vec<i32> {
     ))
 }
 #[tauri::command]
-fn calc_next_hand(turn: i32, board: Vec<i32>) -> i32 {
-    let mut tree = rust_osero::computer::Tree {
-        total_try_count: 0.0,
-    };
-    let mut node = rust_osero::computer::Node {
-        last_hand: 0,
-        color: turn,
-        point: 0.0,
-        node_try_count: 0.0,
-        boards: convert_array_to_bit_board(board),
-        children: vec![],
-    };
-    let res = tree.calc_next(&mut node);
-    most_right_bit_index(res)
+async fn calc_next_hand(turn: i32, board: Vec<i32>) -> i32 {
+    tauri::async_runtime::spawn_blocking(move || {
+        let mut tree = rust_osero::computer::Tree {
+            total_try_count: 0.0,
+        };
+        let mut node = rust_osero::computer::Node {
+            last_hand: 0,
+            color: turn,
+            point: 0.0,
+            node_try_count: 0.0,
+            boards: convert_array_to_bit_board(board),
+            children: vec![],
+        };
+        let res = tree.calc_next(&mut node);
+        most_right_bit_index(res)
+    })
+    .await
+    .unwrap()
 }
 #[tauri::command]
 fn is_end(board: Vec<i32>) -> i32 {

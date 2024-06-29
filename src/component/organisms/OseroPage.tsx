@@ -1,14 +1,11 @@
 import OseroBoard from "./OseroBoard";
-import { INITIAL_BOARD, PlayerStatus, Turn } from "../../lib/osero";
 import { useState } from "react";
 import { Box, Button, styled } from "@material-ui/core";
-import { useRecoilState } from "recoil";
-import { playerTurnAtom } from "../recoil/oseroAtoms";
 
 const OseroPage = () => {
     const [gameState, setGameState] = useState<"Playing" | "Start">("Start");
-    const [_, setPlayerTurn] = useRecoilState(playerTurnAtom);
-    const onClick = (turn: Turn) => {
+    const [playerTurn, setPlayerTurn] = useState<"BLACK" | "WHITE">("BLACK");
+    const onClick = (turn: "BLACK" | "WHITE") => {
         setPlayerTurn(turn);
         setGameState("Playing");
     };
@@ -16,12 +13,12 @@ const OseroPage = () => {
     return (
         <>
             {gameState === "Playing" ? (
-                <OseroBoard board={INITIAL_BOARD}></OseroBoard>
+                <OseroBoard playerTurn={playerTurn}></OseroBoard>
             ) : (
                 <SContainer>
                     <SBox>
-                        <SButton onClick={() => onClick(PlayerStatus.Black)}>先手</SButton>
-                        <SButton onClick={() => onClick(PlayerStatus.White)}>後手</SButton>
+                        <SButton onClick={() => onClick("BLACK")}>先手</SButton>
+                        <SButton onClick={() => onClick("WHITE")}>後手</SButton>
                     </SBox>
                 </SContainer>
             )}

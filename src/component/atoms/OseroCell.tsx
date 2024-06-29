@@ -1,38 +1,30 @@
 import { styled } from "@material-ui/core";
 import { CellState, CellStatus } from "../../lib/osero";
-import { lastPlaceAtom, placeableAtom, reversedAtom } from "../recoil/oseroAtoms";
-import { useRecoilState } from "recoil";
 
 type Props = {
     cellNum: number;
     cellstatus: CellState;
     onClickCell: () => void;
+    lastPlace: boolean;
+    reversed: boolean;
+    placeablePlace: boolean;
 };
 const OseroCell = (props: Props) => {
-    const [lastPlace] = useRecoilState(lastPlaceAtom);
-    const [placeablePlace] = useRecoilState(placeableAtom);
-    const [reversed] = useRecoilState(reversedAtom);
+    const { lastPlace, reversed, placeablePlace } = props;
 
     return (
         <SCell
             style={{
-                background:
-                    props.cellNum === lastPlace
-                        ? "yellow"
-                        : placeablePlace.indexOf(props.cellNum) !== -1
-                        ? "#bfcec3"
-                        : reversed.indexOf(props.cellNum) !== -1
-                        ? "#976871"
-                        : "#0b692d",
+                background: lastPlace ? "yellow" : placeablePlace ? "#bfcec3" : reversed ? "#976871" : "#0b692d",
             }}
             onClick={props.onClickCell}
         >
             {props.cellstatus === CellStatus.Black ? (
-                <SBlack></SBlack>
+                <SBlack>{props.cellNum}</SBlack>
             ) : props.cellstatus === CellStatus.White ? (
-                <SWhite></SWhite>
+                <SWhite>{props.cellNum}</SWhite>
             ) : (
-                <SEmpty></SEmpty>
+                <SEmpty>{props.cellNum}</SEmpty>
             )}
         </SCell>
     );

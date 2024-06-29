@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-import { Board, GameState, Turn } from "./osero";
+import { Board, GameStatus, Turn } from "./osero";
 export module RustApi {
     export const placeStone = async (turn: Turn, board: Board, position: number): Promise<Board> => {
         const res = await invoke("place_stone", { turn: turn - 1, board, position });
@@ -11,9 +11,9 @@ export module RustApi {
         return res as number;
     };
 
-    export const isEnd = async (board: Board): Promise<GameState> => {
-        const res = await invoke("is_end", { board });
-        return res as GameState;
+    export const isEnd = async (board: Board) => {
+        const res = (await invoke("is_end", { board })) as 0 | 1 | -1;
+        return res === 0 ? "WHITE" : res === 1 ? "BLACK" : "PROCEED";
     };
 
     export const availablePlaces = async (turn: Turn, board: Board): Promise<Array<number>> => {
