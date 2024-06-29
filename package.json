@@ -1,28 +1,43 @@
 {
-  "name": "osero-rust-gui",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "tauri": "tauri"
-  },
-  "dependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@mui/styled-engine": "^5.14.7",
-    "@tauri-apps/api": "^1.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "recoil": "^0.7.7"
-  },
-  "devDependencies": {
-    "@tauri-apps/cli": "^1.4.0",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.4"
-  }
+    "name": "osero-rust-gui",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "tauri": "tauri",
+        "prepare": "husky install"
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "prettier --write",
+            "eslint --fix"
+        ]
+    },
+    "dependencies": {
+        "@material-ui/core": "^4.12.4",
+        "@mui/styled-engine": "^5.14.7",
+        "@tauri-apps/api": "^1.4.0",
+        "eslint": "9.x",
+        "prettier": "^3.3.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@eslint/compat": "^1.1.0",
+        "@eslint/js": "^9.6.0",
+        "@tauri-apps/cli": "^1.4.0",
+        "@types/react": "^18.2.15",
+        "@types/react-dom": "^18.2.7",
+        "@vitejs/plugin-react": "^4.0.3",
+        "eslint-plugin-react": "^7.34.3",
+        "globals": "^15.6.0",
+        "husky": "^8.0.0",
+        "lint-staged": "15.2.7",
+        "typescript": "^5.0.2",
+        "typescript-eslint": "^7.14.1",
+        "vite": "^4.4.4"
+    }
 }
